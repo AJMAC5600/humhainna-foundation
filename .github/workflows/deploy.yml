@@ -1,0 +1,36 @@
+name: Deploy to jay.arrowbuild.in
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |
+            set -e
+            cd /var/www/wordpress
+            if [ ! -d .git ]; then
+              git init
+              git remote add origin https://github.com/AJMAC5600/humhainna-foundation.git
+            fi
+            git fetch origin main || git fetch origin master
+            git reset --hard origin/main 2>/dev/null || git reset --hard origin/master
+            export COMPOSER_ALLOW_SUPERUSER=1
+            composer install --no-dev --optimize-autoloader --no-interaction
+            php artisan migrate --force
+            php artisan config:cache
+            php artisan view:clear
+            php artisan storage:link || true
+            chown -R www-data:www-data storage bootstrap/cache
+            chmod -R 775 storage bootstrap/cache
+            nginx -t && systemctl reload nginx || service nginx reload || nginx -s reload
+            echo "Deployed $(git rev-parse --short HEAD) at $(date)"
