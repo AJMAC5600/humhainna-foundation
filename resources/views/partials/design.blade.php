@@ -8,7 +8,7 @@
         theme: {
             extend: {
                 colors: {
-                    "primary-container": "#09164a",
+                    "primary-container": "#1e3a8a",
                     "on-background": "#0b1c30",
                     "surface-container-high": "#dce9ff",
                     "surface-light": "#F8FAFC",
