@@ -7,30 +7,106 @@
 
 @section('content')
 {{-- Hero (Stitch screen) --}}
-<section class="grid grid-cols-1 lg:grid-cols-2 gap-gutter mb-section-gap-sm items-center max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
-    <div class="space-y-6">
-        <div class="inline-flex items-center gap-2 bg-surface-container-low px-4 py-2 rounded-full shadow-[0_2px_8px_rgba(9,22,74,0.05)] border border-surface-container-high">
-            <span class="material-symbols-outlined text-secondary-container text-sm">favorite</span>
-            <span class="font-label-sm text-label-sm text-on-surface-variant">Your contribution saves lives</span>
+
+{{-- =========================================================
+HERO
+========================================================= --}}
+<section class="relative w-full overflow-hidden bg-[#fbfaf6]">
+
+    {{-- MOBILE --}}
+    <div class="block sm:hidden w-full">
+        <div class="w-full px-5 pt-5 pb-5 text-center">
+
+            <div class="inline-flex items-center justify-center gap-1.5 px-2.5 py-1 rounded-full
+                        bg-[#102957] border border-white/20
+                        shadow-[0_4px_14px_rgba(16,41,87,0.16)] mb-2.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-[#f28c28] shrink-0"></span>
+                <span class="text-[9px] font-semibold tracking-[0.02em] text-white whitespace-nowrap">
+                    Your contribution saves lives
+                </span>
+            </div>
+
+            <h1 class="font-bold text-[#102957] tracking-[-0.045em] leading-[0.94] text-[26px] mb-2.5">
+                <span class="block">Make an</span>
+                <span class="relative inline-block text-[#c84f0a]">
+                    Impact Today
+                    <svg class="absolute left-0 -bottom-0.5 w-full h-[3px]" viewBox="0 0 220 9" fill="none"
+                        preserveAspectRatio="none" aria-hidden="true">
+                        <path d="M3 6.5C55 2 155 2 217 6" stroke="#c84f0a" stroke-width="3" stroke-linecap="round" />
+                    </svg>
+                </span>
+            </h1>
+
+            <p class="max-w-[340px] mx-auto text-[11px] leading-[1.35] text-slate-700">
+                Every rupee you donate goes directly towards providing
+                essential resources, education, and healthcare to
+                those who need it most.
+            </p>
+
         </div>
-        <h1 class="font-display-lg text-display-lg text-primary">Make an <span class="text-secondary">Impact</span> Today.</h1>
-        <p class="font-body-lg text-body-lg text-on-surface-variant">
-            Every rupee you donate goes directly towards providing essential resources, education, and healthcare to those who need it most. Join our mission of transparency and compassion.
-        </p>
-        <div class="flex items-center gap-4 p-4 bg-surface-container rounded-xl border border-surface-container-high w-fit">
-            <span class="material-symbols-outlined text-success-green text-3xl">verified</span>
-            <div>
-                <p class="font-label-sm text-label-sm font-semibold">{{ $settings['tax_note_80g'] ? '80G Tax Exemption' : 'Transparent Giving' }}</p>
-                <p class="font-label-sm text-label-sm text-on-surface-variant">{{ $settings['tax_note_80g'] ?? 'Regular utilization reports show exactly where every donation goes.' }}</p>
+
+        <img src="{{ asset('images/hero-2mobile.png') }}"
+             alt="Hum Hain Na Foundation — Donate"
+             class="block w-full h-auto object-contain select-none pointer-events-none"
+             loading="eager" draggable="false">
+    </div>
+
+    {{-- TABLET + DESKTOP --}}
+    <div class="hidden sm:block relative w-full">
+        <img src="{{ asset('images/hero-2.png') }}"
+             alt="Hum Hain Na Foundation — Donate"
+             class="block w-full h-auto object-contain select-none pointer-events-none"
+             loading="eager" draggable="false">
+
+        <div class="absolute inset-0">
+            <div class="absolute inset-0 bg-gradient-to-r from-[#fbfaf6]/55 via-[#fbfaf6]/15 to-transparent pointer-events-none"></div>
+
+            <div class="relative z-10 w-full h-full max-w-[1800px] mx-auto flex items-center">
+                <div class="w-[55%] md:w-[50%] lg:w-[48%] xl:w-[46%]
+                            pl-[4%] md:pl-[5%] lg:pl-[5.5%] xl:pl-[6%]
+                            pr-2 md:pr-3 lg:pr-4">
+
+                    <div class="inline-flex items-center gap-1 md:gap-1.5 lg:gap-2
+                                px-2 md:px-3 lg:px-4 py-0.5 md:py-1 lg:py-2
+                                rounded-full bg-[#102957] border border-white/20
+                                shadow-[0_4px_14px_rgba(16,41,87,0.16)]
+                                mb-1.5 md:mb-2.5 lg:mb-4">
+                        <span class="w-1 h-1 md:w-1.5 md:h-1.5 lg:w-2 lg:h-2 rounded-full bg-[#f28c28] shrink-0"></span>
+                        <span class="text-[7px] md:text-[9px] lg:text-[11px] xl:text-sm
+                                     font-semibold tracking-[0.02em] text-white whitespace-nowrap">
+                            Your contribution saves lives
+                        </span>
+                    </div>
+
+                    <h1 class="font-bold text-[#102957] tracking-[-0.045em] leading-[0.94]
+                               text-[20px] md:text-[28px] lg:text-[42px] xl:text-[56px] 2xl:text-[68px]
+                               mb-1.5 md:mb-2.5 lg:mb-4">
+                        <span class="block">Make an</span>
+                        <span class="relative inline-block text-[#c84f0a]">
+                            Impact Today
+                            <svg class="absolute left-0 -bottom-0.5 md:-bottom-1 lg:-bottom-1.5
+                                        w-full h-[2px] md:h-[3px] lg:h-[4px]"
+                                 viewBox="0 0 220 9" fill="none"
+                                 preserveAspectRatio="none" aria-hidden="true">
+                                <path d="M3 6.5C55 2 155 2 217 6" stroke="#c84f0a" stroke-width="3" stroke-linecap="round" />
+                            </svg>
+                        </span>
+                    </h1>
+
+                    <p class="max-w-[280px] md:max-w-[380px] lg:max-w-[480px]
+                              text-[8px] md:text-[10px] lg:text-[12px] xl:text-[15px] 2xl:text-[19px]
+                              leading-[1.3] md:leading-[1.35] lg:leading-[1.45] xl:leading-[1.5]
+                              text-slate-700">
+                        Every rupee you donate goes directly towards providing
+                        essential resources, education, and healthcare to
+                        those who need it most.
+                    </p>
+
+                </div>
             </div>
         </div>
     </div>
-    <div class="rounded-2xl overflow-hidden shadow-[0_8px_24px_rgba(9,22,74,0.08)] relative h-[320px] lg:h-[440px] bg-gradient-to-br from-primary-container via-surface-tint to-secondary">
-        <div class="absolute inset-0 opacity-20" style="background-image: radial-gradient(#ffffff 1px, transparent 1px); background-size: 16px 16px;"></div>
-        <div class="absolute inset-0 bg-gradient-to-t from-primary-container/80 to-transparent flex items-end p-6">
-            <p class="text-on-primary font-headline-md text-headline-md">Over 50,000 lives touched.</p>
-        </div>
-    </div>
+
 </section>
 
 @if (session('donation_success'))
