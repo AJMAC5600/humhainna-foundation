@@ -19,7 +19,7 @@ class VolunteerController extends Controller
             'photo' => ['required', 'image', 'max:4096'],
             'dob' => ['required', 'date', 'before:today'],
             'gender' => ['required', 'in:male,female,other'],
-            'mobile' => ['required', 'digits:10'],
+            'mobile' => ['required', 'regex:/^[6-9][0-9]{9}$/'],
             'email' => ['required', 'email', 'max:255'],
             'address' => ['required', 'string', 'max:500'],
             'city' => ['required', 'string', 'max:100'],
@@ -34,11 +34,12 @@ class VolunteerController extends Controller
             'experience' => ['nullable', 'string', 'max:3000'],
             'id_proof' => ['required', 'file', 'mimes:jpg,jpeg,png,pdf', 'max:4096'],
             'emergency_contact_name' => ['required', 'string', 'max:255'],
-            'emergency_contact_phone' => ['required', 'string', 'max:20'],
+            'emergency_contact_phone' => ['required', 'regex:/^[6-9][0-9]{9}$/'],
             'consent' => ['accepted'],
         ], [
             'consent.accepted' => 'You must accept the volunteer code of conduct to continue.',
-            'mobile.digits' => 'Enter a valid 10-digit mobile number.',
+            'mobile.regex' => 'Mobile number 10 digit ka ho aur 6-9 se start ho (jaise 9876543210).',
+            'emergency_contact_phone.regex' => 'Emergency phone bhi 10 digit ka valid mobile hona chahiye.',
             'pincode.digits' => 'Enter a valid 6-digit PIN code.',
         ]);
 

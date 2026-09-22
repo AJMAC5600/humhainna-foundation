@@ -438,7 +438,10 @@ WHY VOLUNTEER  (redesigned)
                             <div class="flex flex-col gap-1.5">
                                 <label class="font-label-sm text-label-sm text-on-background" for="dob">Date of Birth *</label>
                                 <input class="rounded-xl border-outline-variant/50 bg-surface focus:border-primary-container focus:ring-primary-container/20 px-4 py-3 shadow-sm transition-colors"
-                                       id="dob" name="dob" value="{{ old('dob') }}" required type="date"/>
+                                       id="dob" name="dob" value="{{ old('dob') }}" required type="date"
+                                       min="1945-01-01" max="{{ now()->subYears(10)->format('Y-m-d') }}"
+                                       onclick="this.showPicker && this.showPicker()" onfocus="this.showPicker && this.showPicker()"/>
+                                <p class="text-xs text-on-surface-variant">Aap calendar ke year par click karke saal jaldi change kar sakte hain, ya date type kar sakte hain (DD-MM-YYYY).</p>
                             </div>
                         </div>
 
@@ -482,8 +485,12 @@ WHY VOLUNTEER  (redesigned)
                                     <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-on-surface-variant">+91</span>
                                     <input class="rounded-xl border-outline-variant/50 bg-surface focus:border-primary-container focus:ring-primary-container/20 pl-12 pr-4 py-3 w-full shadow-sm transition-colors"
                                            id="mobile" name="mobile" placeholder="98765 43210"
-                                           value="{{ old('mobile') }}" required type="tel"/>
+                                           value="{{ old('mobile') }}" required type="tel"
+                                           inputmode="numeric" pattern="[6-9][0-9]{9}" maxlength="10"
+                                           oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,10); this.setCustomValidity('')"
+                                           oninvalid="this.setCustomValidity('10-digit mobile number dalen — 6-9 se start hona chahiye')"/>
                                 </div>
+                                <p class="text-xs text-on-surface-variant">Sirf 10 digit, bina space — jaise 9876543210</p>
                             </div>
                         </div>
 
@@ -668,9 +675,33 @@ WHY VOLUNTEER  (redesigned)
 function checkInterest(value) {
     const cb = document.querySelector(`input[name="areas_of_interest[]"][value="${value}"]`);
     if (!cb) return;
-    cb.checked = true;
+    cb.checked = !cb.checked;
+    cb.dispatchEvent(new Event('change', {bubbles:true}));
+    // visual sync
     const label = cb.closest('label');
-    label.classList.add('border-primary-container','ring-1','ring-primary-container/30','bg-surface-container-low');
+    if (cb.checked) {
+        label.classList.add('border-primary-container','ring-1','ring-primary-container/30','bg-surface-container-low');
+        label.classList.remove('border-outline-variant/40','bg-surface');
+    } else {
+        label.classList.remove('border-primary-container','ring-1','ring-primary-container/30','bg-surface-container-low');
+        label.classList.add('border-outline-variant/40','bg-surface');
+    }
+    document.getElementById('register-form')?.scrollIntoView({behavior:'smooth', block:'start'});
+    // brief highlight
+    label.animate([{transform:'scale(1.02)'},{transform:'scale(1)'}], {duration:250});
 }
+// keep label border in sync when user clicks checkbox directly
+document.querySelectorAll('input[name="areas_of_interest[]"]').forEach(cb=>{
+    cb.addEventListener('change', ()=>{
+        const label = cb.closest('label');
+        if (cb.checked) {
+            label.classList.add('border-primary-container','ring-1','ring-primary-container/30','bg-surface-container-low');
+            label.classList.remove('border-outline-variant/40','bg-surface');
+        } else {
+            label.classList.remove('border-primary-container','ring-1','ring-primary-container/30','bg-surface-container-low');
+            label.classList.add('border-outline-variant/40','bg-surface');
+        }
+    });
+});
 </script>
 @endpush

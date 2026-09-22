@@ -8,7 +8,7 @@
     <p class="font-body-md text-body-md text-on-surface-variant mt-1">Edit website text, contact info, donation details and social links — no developer needed.</p>
 </header>
 
-<form method="POST" action="{{ route('admin.content.update') }}" class="space-y-gutter max-w-4xl">
+<form method="POST" action="{{ route('admin.content.update') }}" enctype="multipart/form-data" class="space-y-gutter max-w-4xl">
     @csrf
     @method('PUT')
 
@@ -28,6 +28,10 @@
                 'hero_title' => ['Hero Title', 'text'],
                 'hero_subtitle' => ['Hero Subtitle', 'textarea'],
                 'footer_note' => ['Footer Note', 'text'],
+            ],
+            'Homepage Images' => [
+                'hero_banner' => ['Hero Banner (Desktop) — 1920x ~600px', 'image'],
+                'hero_banner_mobile' => ['Hero Banner (Mobile) — 800x ~900px', 'image'],
             ],
             'About Us' => [
                 'mission' => ['Mission', 'textarea'],
@@ -79,6 +83,11 @@
                         <label class="font-label-sm text-label-sm text-on-background" for="{{ $key }}">{{ $label }}</label>
                         @if ($type === 'textarea')
                             <textarea id="{{ $key }}" name="{{ $key }}" rows="3" class="rounded-lg border-outline-variant/50 px-4 py-3">{{ old($key, \App\Models\Setting::get($key)) }}</textarea>
+                        @elseif ($type === 'image')
+                            @php($cur = \App\Models\Setting::get($key))
+                            @if($cur)<img src="{{ asset('storage/'.$cur) }}" class="h-20 w-auto rounded border mb-2"/>{{ $cur }}@endif
+                            <input type="file" id="{{ $key }}" name="{{ $key }}" accept="image/*" class="rounded-lg border border-dashed border-outline-variant/50 px-4 py-3 file:mr-3 file:py-1 file:px-3 file:rounded file:border-0 file:bg-surface-container-low file:text-primary-container"/>
+                            <span class="text-xs text-on-surface-variant">Upload kare — purani image replace ho jayegi</span>
                         @else
                             <input id="{{ $key }}" name="{{ $key }}" value="{{ old($key, \App\Models\Setting::get($key)) }}" class="rounded-lg border-outline-variant/50 px-4 py-3"/>
                         @endif

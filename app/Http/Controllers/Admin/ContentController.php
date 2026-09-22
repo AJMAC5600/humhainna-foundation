@@ -34,6 +34,18 @@ class ContentController extends Controller
             }
         }
 
+        // hero banner uploads (optional) - stored in public disk
+        if ($request->hasFile('hero_banner')) {
+            $request->validate(['hero_banner' => ['image','max:5120']]);
+            $path = $request->file('hero_banner')->store('hero', 'public');
+            Setting::set('hero_banner', $path);
+        }
+        if ($request->hasFile('hero_banner_mobile')) {
+            $request->validate(['hero_banner_mobile' => ['image','max:5120']]);
+            $path = $request->file('hero_banner_mobile')->store('hero', 'public');
+            Setting::set('hero_banner_mobile', $path);
+        }
+
         return back()->with('success', 'Site content saved.');
     }
 }

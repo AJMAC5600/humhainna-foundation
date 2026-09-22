@@ -168,7 +168,7 @@
             </div>
 
             {{-- MOBILE IMAGE (below text) --}}
-            <img src="{{ asset('images/hero-banner-mobile.png') }}" alt="Hum Hain Na Foundation — Together We Rise"
+            <img src="{{ \App\Models\Setting::get('hero_banner_mobile') ? asset('storage/'.\App\Models\Setting::get('hero_banner_mobile')) : asset('images/hero-banner-mobile.png') }}" alt="Hum Hain Na Foundation — Together We Rise"
                 class="block w-full h-auto object-contain select-none pointer-events-none" loading="eager"
                 draggable="false">
 
@@ -180,7 +180,7 @@
         ====================================================== --}}
         <div class="hidden sm:block relative w-full">
 
-            <img src="{{ asset('images/hero-banner.png') }}" alt="Hum Hain Na Foundation — Together We Rise"
+            <img src="{{ \App\Models\Setting::get('hero_banner') ? asset('storage/'.\App\Models\Setting::get('hero_banner')) : asset('images/hero-banner.png') }}" alt="Hum Hain Na Foundation — Together We Rise"
                 class="block w-full h-auto object-contain select-none pointer-events-none" loading="eager"
                 draggable="false">
 

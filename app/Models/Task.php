@@ -9,6 +9,14 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 #[Fillable(['title', 'description', 'event_id', 'start_date', 'deadline', 'priority', 'hours'])]
 class Task extends Model
 {
+    protected function casts(): array
+    {
+        return [
+            'start_date' => 'date',
+            'deadline' => 'date',
+        ];
+    }
+
     public function volunteers(): BelongsToMany
     {
         return $this->belongsToMany(Volunteer::class)
