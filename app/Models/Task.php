@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 #[Fillable(['title', 'description', 'event_id', 'start_date', 'deadline', 'priority', 'hours'])]
@@ -15,6 +16,11 @@ class Task extends Model
             'start_date' => 'date',
             'deadline' => 'date',
         ];
+    }
+
+    public function event(): BelongsTo
+    {
+        return $this->belongsTo(Event::class);
     }
 
     public function volunteers(): BelongsToMany
